@@ -1,0 +1,66 @@
+@startuml design_model_v2
+
+skin rose
+
+' definiciones
+
+abstract class Values {
+    {static} const colors = 'rbygop' : const
+    {static} const wbColors = 'wb'
+    {static} const totalAttemps = 15
+    {static} const combinationLength = 4
+}
+
+class MasterMind {
+    + void play()
+    - bool _isResume() 
+}
+
+class Game {
+    - final List<String> _proposedCombinations
+    + void play()
+    - void _playAttemps()
+    - bool _win()
+    - bool _completeAttemps()
+}
+
+class ConsoleView {
+    + void showWellcome()
+    + void showAttemps(int attemp)
+    + void showResults([proposedCombinations], [resultCombinations])
+    + void showComplete(bool win, String secretCombination)
+    + String askProposedCombination()
+    - bool _isLengthDataValid(String? data)
+    - bool _isDataCorrect(String data)
+}
+
+class SecretCombination {
+    + int calculateBlacks(String string)
+    + int calculateWhites(String string)
+    + String get()
+    - random()
+}
+
+class ResultCombination {
+    + bool isCorrect() 
+    + String getBlacks()
+    + String getWhites()
+}
+
+' relaciones
+MasterMind *--> Game
+
+Game *--> ConsoleView
+Game *--> SecretCombination
+Game *--> "n" ResultCombination
+
+ConsoleView ..> ResultCombination
+ConsoleView ..> SecretCombination
+
+ConsoleView ..> Values
+Game ..> Values
+ResultCombination ..> Values
+SecretCombination ..> Values
+
+
+@enduml

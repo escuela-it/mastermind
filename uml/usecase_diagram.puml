@@ -1,0 +1,22 @@
+@startuml usecase_diagram
+
+'configurations
+skin rose
+left to right direction
+
+'elements
+
+actor User
+package System {
+    usecase init
+    usecase play
+    usecase resume
+}
+
+'relations
+
+User --> init
+User --> play
+User --> resume
+
+@enduml

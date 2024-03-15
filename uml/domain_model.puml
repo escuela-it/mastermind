@@ -1,0 +1,51 @@
+@startuml domain_model
+
+skin rose
+
+' definiciones
+
+enum SmallTokenColors {
+    Black
+    White
+}
+enum BigTokenColors {
+    Yellow
+    Orange
+    Pink
+    Red
+    Brown
+    Green
+    Blue
+    Magenta
+}
+
+' relaciones
+
+MasterMind *--> "n" Match
+
+Match *--> Board
+Match *--> "10" Turn
+
+
+Turn *--> CodeBreaker
+Turn *--> CodeMaker
+CodeBreaker *--> ProposedCombination
+CodeMaker *--> ResultCombination
+
+Board *--> SecretCombination
+Board *--> "10" Row
+
+Row *--> "5" BigHole
+Row *--> "5" SmallHole
+
+BigToken *--> BigTokenColors
+SmallToken *--> SmallTokenColors
+
+SecretCombination *--> "5" BigToken
+ProposedCombination *--> "5" BigToken
+ResultCombination *--> "5" SmallToken
+ResultCombination *--> Goal
+Goal *--> SmallToken : 5 black
+
+
+@enduml

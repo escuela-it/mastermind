@@ -1,0 +1,116 @@
+@startuml design_model_v3
+
+skin rose
+
+' definiciones
+
+abstract class Values {
+    {static} const colors = 'rbygop' : const
+    {static} const wbColors = 'wb'
+    {static} const totalAttemps = 15
+    {static} const combinationLength = 4
+}
+
+package Game {
+
+    class MasterMind {
+        + void play()
+        - bool _isResume() 
+    }
+
+    class Game {
+        - final List<String> _proposedCombinations
+
+        + void play()
+        - void _playAttemps()
+        - bool _win()
+        - ResultCombination _getLastResultCombination()
+    }
+
+    class SecretCombination {
+        - String _combination
+
+        + int calculateBlacks(String string)
+        + int calculateWhites(String string)
+        + String get()
+        - random()
+    }
+
+    class ResultCombination {
+        - int _blacks
+        - int _whites
+
+        + bool isCorrect() 
+        + String getBlacks()
+        + String getWhites()
+    }
+
+}
+
+package Views {
+
+    class ConsoleView {
+        + void showWellcome()
+        + void showBoardView()
+        + String askCombination()
+        + void showResultView(bool win, String secretCombination)
+    }
+
+    class WellcomeView {
+        + void show()
+    }
+
+    class BoardView {
+        + void show(int attemp, [proposedCombinations], [resultCombinations])
+    }
+
+    class AttempsView {
+        + void show(int attemp)
+    }
+
+    class ResultsView {
+    + void show([proposedCombinations], [resultCombinations])
+    }
+
+    class WinnerView {
+        + void show(String secretCombination)
+    }
+
+    class LooserView {
+        + void show(String secretCombination)
+    }
+
+    class AskView {
+        + String ask()
+        - bool _isLengthDataValid(String? data)
+        - bool _isDataCorrect(String data)
+    }
+}
+
+' relaciones
+MasterMind *--> Game
+
+Game *--> ConsoleView
+Game *--> SecretCombination
+Game *--> "n" ResultCombination
+
+ConsoleView *--> WellcomeView
+ConsoleView *---> BoardView
+ConsoleView *--> AskView
+ConsoleView *--> WinnerView
+ConsoleView *--> LooserView
+
+BoardView *--> AttempsView
+BoardView *--> ResultsView
+
+
+ConsoleView ..> ResultCombination
+ConsoleView ..> SecretCombination
+
+ConsoleView ..> Values
+Game ..> Values
+ResultCombination ..> Values
+SecretCombination ..> Values
+
+
+@enduml

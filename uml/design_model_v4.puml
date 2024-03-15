@@ -1,0 +1,137 @@
+@startuml design_model_v4
+
+skin rose
+
+' definiciones
+
+
+class MasterMind {
+    + void play()
+}
+
+package Views {
+    class GameView {
+        + draw()
+        + void reset()
+    }
+
+    class TitleView {
+        + draw()
+    }
+
+    class BoardView {
+        + draw(Game game)
+    }
+
+    class AttempsView {
+        + void draw(int attemp)
+    }
+
+    class ProposedCombinationView {
+        + void draw(String proposedCombination, ResultCombination resultCombination)
+    }
+
+    class AskCombinationView {
+        + String interact()
+        - bool _isLengthDataValid(String? data)
+        - bool _isDataCorrect(String data)
+    }
+
+    class ResumeView {
+        + bool interact()
+    }
+
+    class FinishView {
+        void draw(bool win, String secretCombination)
+    }
+
+
+}
+
+package Models {
+
+    class Game {
+        + bool isFinished()
+        + String getProposedCopmbination(int i)
+        + ResultCombination getResultCombination(int i)
+        + void addProposedCombiantion(String proposedCombination)
+        + void addResultCombination()
+        + void incrementAttemp()
+        + int getAttemp()
+        + int proposedCombinationsLength()
+        + void reset()
+        + bool isWin() 
+        + String getSecretCombination()
+
+
+    }
+
+    class ProposedCombination {
+
+    }
+
+    class SecretCombination {
+        + void random()
+        + int calculateBlacks(String proposedCombination)
+        + int calculateWhites(String proposedCombination) 
+        + String get()
+    }
+
+    class ResultCombination {
+        + bool isCorrect()
+        + int getBlacks()
+        + int getWhites()
+    }
+
+    class Resume {
+        + void setResponse(String response)
+        + bool isResponseCorrect()
+        + bool isResumed()
+    }
+
+    class Attemp {}
+}
+
+package Utils {
+    abstract class Console {
+       {static} void write(Object? object, {bool padding = false})
+       {static} void writeInLine([Object? object = ""])
+       {static} String? read()
+       {static} String? ask(String question)
+    }
+
+    abstract class Values {
+        {static} const colors = 'rbygop' : const
+        {static} const wbColors = 'wb'
+        {static} const totalAttemps = 10
+        {static} const combinationLength = 4
+    }
+     
+}
+
+'relations
+
+MasterMind *--> GameView
+MasterMind *--> ResumeView
+
+ResumeView --> Resume
+
+
+GameView *---> TitleView
+GameView *--> BoardView
+GameView --> Game
+
+Game *--> SecretCombination
+Game *--> "  n  " ResultCombination
+Game *--> "  n  " ProposedCombination
+Game *--> Attemp
+
+BoardView *--> AttempsView
+BoardView *---> "  n  " ProposedCombinationView
+BoardView *--> AskCombinationView
+BoardView *--> FinishView
+BoardView -left-> Game
+
+MasterMind ..> Utils
+
+@enduml

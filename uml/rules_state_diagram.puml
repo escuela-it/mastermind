@@ -1,0 +1,22 @@
+@startuml rules_state_diagram
+
+'configurations
+skin rose
+
+'definiciones
+
+state choice1 <<choice>>
+state choice2 <<choice>>
+'relations
+
+[*] --> atPlay : [initMatch]
+atPlay --> secretCombinationSetted : [setSecretCombination]
+secretCombinationSetted --> choice1
+choice1 --> playCombinationSetted : [setPlayCombination]
+playCombinationSetted --> choice2 : [checkPlayCombinationMatch]
+choice2 --> [*] : [isMatched]
+choice2 --> notMatched : [isNotMatched]
+notMatched --> resultCombinationSetted : [setResultCombination]
+resultCombinationSetted --> choice1
+
+@enduml
