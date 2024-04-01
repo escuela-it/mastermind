@@ -1,6 +1,6 @@
 import 'package:mastermind/utils/console.dart';
 import 'package:mastermind/v2_oop/result_combination.dart';
-import 'package:mastermind/v2_oop/values.dart';
+import 'package:mastermind/utils/values.dart';
 
 class ConsoleView {
   void showWellcome() {

@@ -1,4 +1,4 @@
-@startuml design_model_v4
+@startuml design_model_v5
 
 skin rose
 
@@ -20,7 +20,7 @@ package Interfaces {
     }
 
     abstract class BoardViewInterface {
-        + draw(Game game)
+        + draw()
     }
 
     abstract class AttempsViewInterface {
@@ -50,6 +50,18 @@ package ConsoleViews {
 }
 
 package GraphicViews {
+}
+
+package Controllers {
+    class PlayController {
+        + void play()
+    }
+    class ResetController {
+        + void reset()
+    }
+    class ResumeController {
+        + void interact()
+    }
 }
 
 package Models {
@@ -115,31 +127,36 @@ package Utils {
 
 'relations
 
-MasterMind *--> GameViewInterface
+
 MasterMind *--> ResumeViewInterface
+MasterMind *--> GameViewInterface
 
-ResumeViewInterface --> Resume
+ResumeViewInterface --> ResumeController
 
-
+GameViewInterface *--> ResetController
+GameViewInterface *--> PlayController
 GameViewInterface *--> TitleViewInterface
 GameViewInterface *--> BoardViewInterface
-GameViewInterface --> Game
+
+BoardViewInterface *--> PlayController
+BoardViewInterface *---> AttempsViewInterface
+BoardViewInterface *--> ProposedCombinationViewInterface
+BoardViewInterface *--> AskCombinationViewInterface
+BoardViewInterface *--> FinishViewInterface
+
+Interfaces <|-- ConsoleViews
+Interfaces <|-- GraphicViews
+
+PlayController *--> Game
+
+ResetController *--> Game
+ResumeController *--> Resume
 
 Game *--> SecretCombination
 Game *--> "  n  " ResultCombination
 Game *--> "  n  " ProposedCombination
 Game *--> Attemp
 
-BoardViewInterface *--> AttempsViewInterface
-BoardViewInterface *---> "  n  " ProposedCombinationViewInterface
-BoardViewInterface *--> AskCombinationViewInterface
-BoardViewInterface *--> FinishViewInterface
-BoardViewInterface --> Game
-
-MasterMind .right.> Utils
-
-Interfaces <|-- ConsoleViews
-Interfaces <|-- GraphicViews
-
+MasterMind ..> Utils
 
 @enduml

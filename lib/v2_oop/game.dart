@@ -1,4 +1,4 @@
-import 'package:mastermind/v2_oop/values.dart';
+import 'package:mastermind/utils/values.dart';
 import 'package:mastermind/v2_oop/console_view.dart';
 import 'package:mastermind/v2_oop/result_combination.dart';
 import 'package:mastermind/v2_oop/secret_combination.dart';
