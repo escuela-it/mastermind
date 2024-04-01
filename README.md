@@ -88,15 +88,17 @@ RESUME? (y/n): y
 
 ![alt text](out/uml/design_model_v2.png)
 
-### v3_oop_separate_views
+### v3_separate_views
 
 ![alt text](out/uml/design_model_v3.png)
 
-### v4_oop_several_tecnologies_views
+### v4_several_tecnologies_views
 
 ![alt text](out/uml/design_model_v4.png)
 
-### v4_oop_mvc
+### v5_controllers
+
+![alt text](out/uml/design_model_v5.png)
 
 
 
